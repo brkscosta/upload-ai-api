@@ -1,0 +1,14 @@
+# Node modules
+node_modules
+
+# Keep environment variables out of version control
+.env
+
+# Audio files out of version control
+*.mp3
+
+# JavaScript output folder
+dist
+
+# Requests
+*.http

@@ -1,0 +1,42 @@
+{
+  "name": "upload-ai-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/server.js",
+  "engines": {
+    "node": ">=16.13"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "database": "prisma generate",
+    "build": "tsc",
+    "lint": "eslint . --fix --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.6.1",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prisma": "^5.3.1",
+    "tsx": "^3.12.10",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@fastify/cors": "^8.3.0",
+    "@fastify/multipart": "^7.7.3",
+    "@prisma/client": "5.3.1",
+    "@rocketseat/eslint-config": "^2.1.0",
+    "ai": "^2.2.12",
+    "aws-sdk": "^2.1460.0",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.23.2",
+    "mongodb": "^6.1.0",
+    "openai": "^4.7.0",
+    "replicate": "^0.18.0",
+    "zod": "^3.22.2"
+  }
+}

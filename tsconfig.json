@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES2022",
+    "skipLibCheck": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "rootDir": "./src/",
+    "outDir": "./dist/",
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+  },
+  "exclude": ["./prisma", "node_modules"],
+  "include": ["./src/**/*.ts"]
+}
