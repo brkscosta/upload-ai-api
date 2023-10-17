@@ -1,19 +1,27 @@
 import { fastifyMultipart } from '@fastify/multipart'
+import { PutObjectRequest } from 'aws-sdk/clients/s3'
 import { FastifyInstance } from 'fastify'
 import { randomUUID } from 'node:crypto'
 import path from 'node:path'
 import { s3 } from '../lib/aws'
 import { prisma } from '../lib/prisma'
 
+const MAX_FILE_SIZE: number = 1_048_576 * 25 // 25mb
+
 async function uploadFileToS3(
   fileStream: NodeJS.ReadableStream,
   s3FileName: string,
 ) {
   try {
-    const params = {
+    const expirationTime = new Date()
+    expirationTime.setMinutes(expirationTime.getMinutes() + 2) // 2 minutes
+
+    const params: PutObjectRequest = {
       Bucket: process.env.AMAZON_S3_BUCKET_NAME,
       Key: s3FileName,
       Body: fileStream,
+      Expires: expirationTime,
+      Tagging: 'TempFile=true',
     }
 
     const data = await s3.upload(params).promise()
@@ -28,7 +36,7 @@ async function uploadFileToS3(
 export async function uploadVideoRoute(app: FastifyInstance) {
   app.register(fastifyMultipart, {
     limits: {
-      fileSize: 1_048_576 * 25, // 25mb
+      fileSize: MAX_FILE_SIZE,
     },
   })
 
