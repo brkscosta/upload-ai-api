@@ -37,10 +37,20 @@ export async function generateAICompletionRoute(app: FastifyInstance) {
 
     const stream = OpenAIStream(response)
 
+    if (!req.headers.origin) {
+      return reply.status(400).send({ error: 'origin client is empty' })
+    }
+
+    const hostName = new URL(req.headers.origin).hostname
+
+    if (hostName !== process.env.FRONT_END_HOSTNAME) {
+      return reply.status(400).send({ error: 'origin client not allowed' })
+    }
+
     streamToResponse(stream, reply.raw, {
       headers: {
-        'Access-Controll-Allow-Origin': '*',
-        'Access-Controll-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Origin': req.headers.origin,
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
       },
     })
   })
